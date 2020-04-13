@@ -124,10 +124,34 @@ const fetchPost = ({ successCallback, failureCallback, postId }) => {
 };
 
 
+
+
+const fetchPhotos = ({ successCallback, failureCallback }) => {
+  try {
+    AxiosClient.get(`photos`)
+      .then((response) => {
+        if (successCallback) {
+          successCallback(response.data);
+        }
+      })
+      .catch((response) => {
+        if (failureCallback) {
+          failureCallback(response.data);
+        }
+      });
+  } catch (error) {
+    if (failureCallback) {
+      failureCallback({ error: 'Network error occurred.' });
+    }
+  }
+};
+
+
 module.exports = {
   fetchAllUser,
   fetchUser,
   fetchUserPost,
   fetchAllPost,
-  fetchPost
+  fetchPost,
+  fetchPhotos
 }
